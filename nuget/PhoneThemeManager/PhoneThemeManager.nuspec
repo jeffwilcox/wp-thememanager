@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PhoneThemeManager</id>
-    <version>1.00</version>
+    <version>1.01</version>
     <title>Windows Phone Theme Manager</title>
     <authors>Jeff Wilcox</authors>
     <owners>Jeff Wilcox</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://d2bk44826ux9xe.cloudfront.net/phone.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The ThemeManager class provides static methods to be used during app initialization to force the app's resources to appear as the Dark or Light theme.</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>Adds Accent color support.</releaseNotes>
     <copyright>Copyright 2012</copyright>
     <tags>Windows "Windows Phone" phone wp7 design light dark theme manager thememanager phonethememanager</tags>
   </metadata>

@@ -55,6 +55,29 @@ namespace Microsoft.Phone.Controls
     }
 
     /// <summary>
+    /// Represents an accent color available to users on the Windows Phone. 
+    /// I've also included a few popular themes found on specific phones or in
+    /// specific markets.
+    /// </summary>
+    public enum AccentColor
+    {
+        Blue,
+        Brown,
+        Green,
+        Pink,
+        Purple,
+        Red,
+        Teal,
+        Lime,
+        Magenta,
+        Mango,
+
+        // Additional accent colors of interest.
+        NokiaBlue,
+        Gray,
+    }
+
+    /// <summary>
     /// Options for overriding the themes in the application instance with
     /// regards to system components that do not use the XAML static resource
     /// values.
@@ -112,19 +135,6 @@ namespace Microsoft.Phone.Controls
         private static Color _foreground;
 
         private static bool _applied;
-
-        public static Color PhoneBackgroundColor
-        {
-            get
-            {
-                if (_applied)
-                {
-                    return _background;
-                }
-
-                return (Color)Application.Current.Resources["PhoneBackgroundColor"];
-            }
-        }
 
         /// <summary>
         /// An extension method for ApplicationBars, will apply the overridden
@@ -219,6 +229,80 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
+        /// Overrides the accent color and brush used at runtime to a new one.
+        /// </summary>
+        /// <param name="color">A uint representing the color to set the brush
+        /// and color to.</param>
+        public static void SetAccentColor(uint color)
+        {
+            SetAccentColor(RuntimeThemeResources.DualColorValue.ToColor(color));
+        }
+
+        /// <summary>
+        /// Overrides the accent color and brush used at runtime to a new one.
+        /// </summary>
+        /// <param name="color">A Color to set the accent brush/color to.</param>
+        public static void SetAccentColor(Color color)
+        {
+            RuntimeThemeResources.DualColorValue.SetColorAndBrush("PhoneAccent", color);
+        }
+
+        /// <summary>
+        /// Overrides the accent color and brush used at runtime to a new one.
+        /// </summary>
+        /// <param name="accentColor">Represents the new popular accent color
+        /// to use.</param>
+        public static void SetAccentColor(AccentColor accentColor)
+        {
+            SetAccentColor(AccentColorEnumToColorValue(accentColor));
+        }
+
+        private static uint AccentColorEnumToColorValue(AccentColor accent)
+        {
+            switch (accent)
+            {
+                case AccentColor.Brown:
+                    return 0xFFA05000;
+
+                case AccentColor.Green:
+                    return 0xFF339933;
+
+                case AccentColor.Lime:
+                    return 0xFFA2C139;
+
+                case AccentColor.Magenta:
+                    return 0xFFD80073;
+
+                case AccentColor.Mango:
+                    return 0xFFF09609;
+
+                case AccentColor.Pink:
+                    return 0xFFE671B8;
+
+                case AccentColor.Purple:
+                    return 0xFFA200FF;
+
+                case AccentColor.Red:
+                    return 0xFFE51400;
+
+                case AccentColor.Teal:
+                    return 0xFF00ABA9;
+
+                // Gray is a custom accent color that my Lumia 800 came with.
+                case AccentColor.Gray:
+                    return 0xFF4B4B4B;
+
+                // Many Lumias come with this custom color.
+                case AccentColor.NokiaBlue:
+                    return 0xFF1080DD;
+
+                case AccentColor.Blue:
+                default:
+                    return 0xFF1BA1E2;
+            }
+        }
+
+        /// <summary>
         /// A specialized private class for handling dark/light theme resource
         /// overrides.
         /// </summary>
@@ -283,7 +367,7 @@ namespace Microsoft.Phone.Controls
                 // values or branding themes here.
             }
 
-            private class DualColorValue : IDualValue
+            internal class DualColorValue : IDualValue
             {
                 private uint _dark;
                 private uint _light;
@@ -294,7 +378,7 @@ namespace Microsoft.Phone.Controls
                     _light = light;
                 }
 
-                private void SetColorAndBrush(string prefix, Color color)
+                internal static void SetColorAndBrush(string prefix, Color color)
                 {
                     var currentColor = (Color)Application.Current.Resources[prefix + "Color"];
                     currentColor.A = color.A;
@@ -311,7 +395,7 @@ namespace Microsoft.Phone.Controls
                     return ToColor(theme == Theme.Dark ? _dark : _light);
                 }
 
-                private static Color ToColor(uint argb)
+                internal static Color ToColor(uint argb)
                 {
                     return Color.FromArgb((byte)((argb & -16777216) >> 24), (byte)((argb & 0xff0000) >> 16), (byte)((argb & 0xff00) >> 8), (byte)(argb & 0xff));
                 }
