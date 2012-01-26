@@ -23,6 +23,14 @@ Implementation created by Jeff Wilcox
 
 A built assembly is also available on NuGet, PhoneThemeManager.
 
+# NuGet Binary
+
+The binary is super easy to use. With NuGet just add the PhoneThemeManager package reference.
+
+# NuGet Source File
+
+Instead of adding yet another assembly to your project, just add the single source file (or add it to your existing shared library, etc.) by using the PhoneThemeManager.Source package.
+
 ## License
 
 Licensed under the Apache License, Version 2.0 (the "License");

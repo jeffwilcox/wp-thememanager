@@ -340,11 +340,6 @@ namespace Microsoft.Phone.Controls
                     return theme == Theme.Dark ? _dark : _light;
                 }
 
-                public object LightValue()
-                {
-                    return _light;
-                }
-
                 public void Apply(Theme theme, string prefix)
                 {
                     string name = "Phone" + prefix;
