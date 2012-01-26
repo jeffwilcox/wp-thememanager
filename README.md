@@ -2,10 +2,12 @@
 
 A Windows Phone library that allows for overriding the theme to be Dark, Light, Inverted, etc.
 
+It also supports overriding the Accent color and brush for use in custom-branded applications. For fun, I've included the standard Mango accent brushes and a few of the custom ones (my Lumia 800 came from Germany and has a gray/'grau' color available, plus Nokia Blue, etc.). I'll accept any pull requests that add additional OEM colors if people think that would have any value in their applications at all.
+
 
 For Windows Phone 7.5 (this library targets the Windows Phone 7.1 SDK)
 
-## How to use
+# How to use
 
 Just call `ThemeManager.ToLightTheme()` or `ThemeManager.ToDarkTheme()` or `ThemeManager.InvertTheme`.
 
@@ -15,23 +17,23 @@ The applied resources only affect mostly chrome colors, foreground, background, 
 
 For more information check out http://www.jeff.wilcox.name/phonethememanager
 
-## Credits
+# Credits
 
 Implementation created by Jeff Wilcox
 
-## NuGet
+# NuGet
 
 A built assembly is also available on NuGet, PhoneThemeManager.
 
-# NuGet Binary
+## NuGet Binary
 
 The binary is super easy to use. With NuGet just add the PhoneThemeManager package reference.
 
-# NuGet Source File
+## NuGet Source File
 
 Instead of adding yet another assembly to your project, just add the single source file (or add it to your existing shared library, etc.) by using the PhoneThemeManager.Source package.
 
-## License
+# License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -45,8 +47,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-## Changelog
+# Changelog
 
 1.0:
 
 * Initial implementation
+
+1.1:
+
+* Adds Accent Brush features and functionality. Use the `ThemeManager.SetAccentColor(...)` overrides.
