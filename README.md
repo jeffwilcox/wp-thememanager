@@ -17,7 +17,7 @@ The applied resources only affect mostly chrome colors, foreground, background, 
 
 For more information check out http://www.jeff.wilcox.name/phonethememanager
 
-# Custom Themes
+# Custom Themes 
 
 This allows you to style your app how you used to in 7.0, but taking the ThemeResources.xaml from `C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Design` (or just Program Files if on a x86 system) and change the colours to suit your app.
 
