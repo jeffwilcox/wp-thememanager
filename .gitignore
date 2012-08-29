@@ -1,0 +1,16 @@
+*.user
+*.suo
+*.xap
+Debug
+Release
+*/Debug
+*/Bin
+*/Release
+*/Debug/*
+*/Release/*
+obj
+bin
+obj/*
+*.docstates
+*.g.cs
+                                                                                                                                                                                                                                                                                                                                   
