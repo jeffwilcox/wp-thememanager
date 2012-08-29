@@ -14,17 +14,17 @@
 // limitations under the License.
 //
 
+using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Microsoft.Phone.Shell;
-using System.Windows.Resources;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Resources;
 
 //
 // This nifty class will help override the runtime resources used in the app's
@@ -80,7 +80,7 @@ namespace Microsoft.Phone.Controls
         NokiaBlue,
         Gray,
         OrangeUK,
-        O2Blue
+        O2Blue,
     }
 
     /// <summary>
@@ -263,17 +263,24 @@ namespace Microsoft.Phone.Controls
             SetAccentColor(AccentColorEnumToColorValue(accentColor));
         }
 
+        /// <summary>
+        /// Uses a custom theme file.
+        /// </summary>
+        /// <param name="styleUri">Uri to the style.</param>
+        /// <param name="themeToOverride">The theme name/value to override.</param>
         public static void SetCustomTheme(Uri styleUri, Theme themeToOverride)
         {
             try
             {
                 ResourceDictionary rd = new ResourceDictionary();
+
                 try
                 {
                     rd.Source = styleUri;
                 }
-                catch // If there was an exception here, try loading it in a different way
+                catch
                 {
+                    // Fallback loading mechanism.
                     StreamResourceInfo sri = Application.GetResourceStream(styleUri);
                     if (sri != null)
                     {
@@ -282,28 +289,33 @@ namespace Microsoft.Phone.Controls
                             string xaml = reader.ReadToEnd();
 
                             if (!string.IsNullOrEmpty(xaml))
+                            {
                                 rd = XamlReader.Load(xaml) as ResourceDictionary;
+                            }
                         }
                     }
                 }
-                try
+
+                if (Application.Current.Resources.MergedDictionaries.Count > 0)
                 {
-                    if (Application.Current.Resources.MergedDictionaries.Count > 0)
-                    {
-                        var dictionaryToRemove = Application.Current.Resources.MergedDictionaries.Single(x => x.Source == styleUri);
-                        Application.Current.Resources.MergedDictionaries.Remove(dictionaryToRemove);
-                    }
+                    Application.Current.Resources.MergedDictionaries.Remove(
+                        Application.Current.Resources.MergedDictionaries.Single(
+                        x => x.Source == styleUri));
                 }
-                catch { }
 
                 SetCustomTheme(rd, themeToOverride);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Debug.WriteLine("Error setting custom theme");
             }
         }
 
+        /// <summary>
+        /// Uses a custom theme resource dictionary.
+        /// </summary>
+        /// <param name="rd">The resource dictionary instance.</param>
+        /// <param name="themeToOverride">The theme value to override.</param>
         public static void SetCustomTheme(ResourceDictionary rd, Theme themeToOverride)
         {
             new RuntimeThemeResources().SetCustomTheme(rd, themeToOverride);
@@ -617,8 +629,7 @@ namespace Microsoft.Phone.Controls
             {
                 if (rd == null)
                 {
-                    Debug.WriteLine("ResourceDictionary passed was null");
-                    return;
+                    throw new ArgumentNullException("rd");
                 }
 
                 if (rd.Count > 0)
@@ -633,29 +644,47 @@ namespace Microsoft.Phone.Controls
                         Color c = (Color)rd[item];
                         string keyName = item.Replace("Phone", "").Replace("Color", ""); // Doing this gives us the keyname used in the RuntimeThemeResources
 
-                        // Get the already existing instance of this key and remove it
+                        // Get the existing instance & remove it
                         try
                         {
                             var itemToRemove = _values.Single(x => x._prefix == keyName);
                             _values.Remove(itemToRemove);
                         }
-                        catch { } // Don't do anything with the exception, it just means the key isn't in both the ResourceDictionary and the standard set of styles.
+                        catch
+                        {
+                            // Don't do anything with the exception, it just 
+                            // means the key isn't in both the 
+                            // ResourceDictionary and standard set of styles.
+
+                            // TODO: Consider just catching the specific 
+                            // exception when the key is not found rather than
+                            // a scary untyped catch.
+                        }
 
                         var itemToAdd = new ThemeValue(keyName, new DualColorValue(ColorToUInt(c), ColorToUInt(c)));
 
                         // As per Jeff's comments, we need to make sure the background, foreground and chrome are placed in the right positions
                         if (keyName.Equals("Background"))
+                        {
                             _values.Insert(0, itemToAdd);
+                        }
                         else if (keyName.Equals("Foreground"))
+                        {
                             _values.Insert(1, itemToAdd);
+                        }
                         else if (keyName.Equals("Chrome"))
+                        {
                             _values.Insert(2, itemToAdd);
+                        }
                         else
+                        {
                             _values.Add(itemToAdd);
+                        }
                     };
                     Application.Current.Resources.MergedDictionaries.Remove(rd);
                     _applied = true;
                     Apply(themeToOverride);
+
                     Debug.WriteLine("Custom theme set");
                 }
                 else
