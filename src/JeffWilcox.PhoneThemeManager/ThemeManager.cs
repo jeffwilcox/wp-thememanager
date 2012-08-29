@@ -21,6 +21,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Phone.Shell;
+using System.Windows.Resources;
+using System.IO;
+using System.Linq;
+using System.Windows.Markup;
 
 //
 // This nifty class will help override the runtime resources used in the app's
@@ -75,6 +79,8 @@ namespace Microsoft.Phone.Controls
         // Additional accent colors of interest.
         NokiaBlue,
         Gray,
+        OrangeUK,
+        O2Blue
     }
 
     /// <summary>
@@ -257,6 +263,52 @@ namespace Microsoft.Phone.Controls
             SetAccentColor(AccentColorEnumToColorValue(accentColor));
         }
 
+        public static void SetCustomTheme(Uri styleUri, Theme themeToOverride)
+        {
+            try
+            {
+                ResourceDictionary rd = new ResourceDictionary();
+                try
+                {
+                    rd.Source = styleUri;
+                }
+                catch // If there was an exception here, try loading it in a different way
+                {
+                    StreamResourceInfo sri = Application.GetResourceStream(styleUri);
+                    if (sri != null)
+                    {
+                        using (StreamReader reader = new StreamReader(sri.Stream))
+                        {
+                            string xaml = reader.ReadToEnd();
+
+                            if (!string.IsNullOrEmpty(xaml))
+                                rd = XamlReader.Load(xaml) as ResourceDictionary;
+                        }
+                    }
+                }
+                try
+                {
+                    if (Application.Current.Resources.MergedDictionaries.Count > 0)
+                    {
+                        var dictionaryToRemove = Application.Current.Resources.MergedDictionaries.Single(x => x.Source == styleUri);
+                        Application.Current.Resources.MergedDictionaries.Remove(dictionaryToRemove);
+                    }
+                }
+                catch { }
+
+                SetCustomTheme(rd, themeToOverride);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error setting custom theme");
+            }
+        }
+
+        public static void SetCustomTheme(ResourceDictionary rd, Theme themeToOverride)
+        {
+            new RuntimeThemeResources().SetCustomTheme(rd, themeToOverride);
+        }
+
         private static uint AccentColorEnumToColorValue(AccentColor accent)
         {
             switch (accent)
@@ -295,6 +347,14 @@ namespace Microsoft.Phone.Controls
                 // Many Lumias come with this custom color.
                 case AccentColor.NokiaBlue:
                     return 0xFF1080DD;
+
+                // This is the accent colour phones from OrangeUK come with by default
+                case AccentColor.OrangeUK:
+                    return 0xFFF7610A;
+
+                // This is the accent colour phones from O2 in the UK come with by default
+                case AccentColor.O2Blue:
+                    return 0xFF31AFE1;
 
                 case AccentColor.Blue:
                 default:
@@ -519,7 +579,7 @@ namespace Microsoft.Phone.Controls
                         }
 
                         // Hook up to the navigation events for the tray.
-                        if (OverrideOptions == ThemeManagerOverrideOptions.SystemTrayAndApplicationBars || 
+                        if (OverrideOptions == ThemeManagerOverrideOptions.SystemTrayAndApplicationBars ||
                             OverrideOptions == ThemeManagerOverrideOptions.SystemTrayColors)
                         {
                             PhoneApplicationFrame paf = frame as PhoneApplicationFrame;
@@ -551,6 +611,63 @@ namespace Microsoft.Phone.Controls
                 {
                     _value.Apply(theme, _prefix);
                 }
+            }
+
+            internal void SetCustomTheme(ResourceDictionary rd, Theme themeToOverride)
+            {
+                if (rd == null)
+                {
+                    Debug.WriteLine("ResourceDictionary passed was null");
+                    return;
+                }
+
+                if (rd.Count > 0)
+                {
+                    // Get a list of all the keys in the resource dictionary that are of type Color
+                    var items = (from t in rd.Keys.Cast<string>()
+                                 where t.EndsWith("Color") && t.StartsWith("Phone")
+                                 select t).ToList();
+
+                    foreach (string item in items)
+                    {
+                        Color c = (Color)rd[item];
+                        string keyName = item.Replace("Phone", "").Replace("Color", ""); // Doing this gives us the keyname used in the RuntimeThemeResources
+
+                        // Get the already existing instance of this key and remove it
+                        try
+                        {
+                            var itemToRemove = _values.Single(x => x._prefix == keyName);
+                            _values.Remove(itemToRemove);
+                        }
+                        catch { } // Don't do anything with the exception, it just means the key isn't in both the ResourceDictionary and the standard set of styles.
+
+                        var itemToAdd = new ThemeValue(keyName, new DualColorValue(ColorToUInt(c), ColorToUInt(c)));
+
+                        // As per Jeff's comments, we need to make sure the background, foreground and chrome are placed in the right positions
+                        if (keyName.Equals("Background"))
+                            _values.Insert(0, itemToAdd);
+                        else if (keyName.Equals("Foreground"))
+                            _values.Insert(1, itemToAdd);
+                        else if (keyName.Equals("Chrome"))
+                            _values.Insert(2, itemToAdd);
+                        else
+                            _values.Add(itemToAdd);
+                    };
+                    Application.Current.Resources.MergedDictionaries.Remove(rd);
+                    _applied = true;
+                    Apply(themeToOverride);
+                    Debug.WriteLine("Custom theme set");
+                }
+                else
+                {
+                    Debug.WriteLine("No custom theme set, no resources to add");
+                }
+            }
+
+            private uint ColorToUInt(Color color)
+            {
+                return (uint)((color.A << 24) | (color.R << 16) |
+                              (color.G << 8) | (color.B << 0));
             }
         }
     }
