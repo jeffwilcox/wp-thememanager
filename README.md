@@ -1,4 +1,4 @@
-﻿#wp-thememanager 
+#wp-thememanager 
 
 A Windows Phone library that allows for overriding the theme to be Dark, Light, Inverted, etc. as well as now enabling you to set a custom theme to override the default Phone brushes.
 
@@ -32,9 +32,17 @@ To then set the custom theme, just call `ThemeManager.SetCustomTheme(rd, Theme.L
 Implementation created by Jeff Wilcox,
 Custom Theme support added by Scott Lovegrove
 
-# NuGet
+## NuGet
 
-This version isn't currently on Nuget, but it's just one .cs file, so just copy the source from this repo.
+A built assembly is also available on NuGet, PhoneThemeManager.
+
+# NuGet Binary
+
+The binary is super easy to use. With NuGet just add the PhoneThemeManager package reference.
+
+# NuGet Source File
+
+Instead of adding yet another assembly to your project, just add the single source file (or add it to your existing shared library, etc.) by using the PhoneThemeManager.Source package.
 
 # License
 
