@@ -440,14 +440,38 @@ namespace Microsoft.Phone.Controls
 
                 internal static void SetColorAndBrush(string prefix, Color color)
                 {
-                    var currentColor = (Color)Application.Current.Resources[prefix + "Color"];
-                    currentColor.A = color.A;
-                    currentColor.B = color.B;
-                    currentColor.G = color.G;
-                    currentColor.R = color.R;
+                    var currentColor = new Color();
+                    // Check if the Colour is actually in the dictionary
+                    if (Application.Current.Resources.Contains(prefix + "Color"))
+                    {
+                        currentColor = (Color) Application.Current.Resources[prefix + "Color"];
+                        currentColor.A = color.A;
+                        currentColor.B = color.B;
+                        currentColor.G = color.G;
+                        currentColor.R = color.R;
+                    }
+                    else
+                    {
+                        // If it's not in the dictionary, add it.
+                        currentColor = color;
+                        Application.Current.Resources.Add(prefix + "Color", currentColor);
+                    }
 
-                    var brush = (SolidColorBrush)Application.Current.Resources[prefix + "Brush"];
-                    brush.Color = currentColor;
+                    // Check if the Brush is actually in the dictionary
+                    if (Application.Current.Resources.Contains(prefix + "Brush"))
+                    {
+                        var brush = (SolidColorBrush) Application.Current.Resources[prefix + "Brush"];
+                        brush.Color = currentColor;
+                    }
+                    else
+                    {
+                        // If it's not in the dictionary, add it.
+                        var brush = new SolidColorBrush
+                                        {
+                                            Color = currentColor
+                                        };
+                        Application.Current.Resources.Add(prefix + "Brush", brush);
+                    }
                 }
 
                 public object Value(Theme theme)
