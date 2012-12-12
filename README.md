@@ -71,3 +71,12 @@ limitations under the License.
 1.2:
 
 * Adds Custom Theme support. Use `ThemeManager.SetCustomTheme(...)`
+
+1.3:
+
+* Merged with fixes from others.
+
+1.3.2:
+
+* Fixes an issue with the light theme and setting to dark w.r.t. the system tray progress indicator
+* Removes a throw when reapplying the theme.
