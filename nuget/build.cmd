@@ -1,4 +1,5 @@
 @echo off
+pushd %~dp0
 pushd ..\src\JeffWilcox.PhoneThemeManager\
 msbuild /p:Configuration=Release
 popd
