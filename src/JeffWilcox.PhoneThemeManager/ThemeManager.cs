@@ -180,11 +180,6 @@ namespace Microsoft.Phone.Controls
         /// <param name="theme">The preferred Theme to override to.</param>
         public static void OverrideTheme(Theme theme)
         {
-            if (_applied)
-            {
-                throw new InvalidOperationException("The theme can only be overridden once per application initialization.");
-            }
-
             if (IsThemeAlready(theme))
             {
                 Debug.WriteLine("The user's theme is already set to the " + theme + " theme. No resources are being overwritten.");
