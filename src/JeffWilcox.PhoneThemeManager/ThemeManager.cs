@@ -141,6 +141,9 @@ namespace Microsoft.Phone.Controls
         private static Color _foreground;
 
         private static bool _applied;
+        private static Theme _themeAtStartup;
+
+        private readonly static Color AlmostWhite = Color.FromArgb(255, 254, 254, 254);
 
         /// <summary>
         /// An extension method for ApplicationBars, will apply the overridden
@@ -182,10 +185,14 @@ namespace Microsoft.Phone.Controls
         {
             if (IsThemeAlready(theme))
             {
+                _themeAtStartup = theme;
+
                 Debug.WriteLine("The user's theme is already set to the " + theme + " theme. No resources are being overwritten.");
             }
             else
             {
+                _themeAtStartup = theme == Theme.Dark ? Theme.Light : Theme.Dark;
+
                 Debug.WriteLine("Overriding resources to match the " + theme + " theme.");
 
                 _applied = true;
@@ -572,8 +579,17 @@ namespace Microsoft.Phone.Controls
             {
                 if (page != null)
                 {
+                    // Corrects the issue where white foreground text and the
+                    // light theme on the phone will then have invisible
+                    // progress indicator text.
+                    Color systemTrayForeground = foreground;
+                    if (Colors.White == foreground && _themeAtStartup == Theme.Light)
+                    {
+                        systemTrayForeground = AlmostWhite;
+                    }
+
                     SystemTray.SetBackgroundColor(page, background);
-                    SystemTray.SetForegroundColor(page, foreground);
+                    SystemTray.SetForegroundColor(page, systemTrayForeground);
 
                     if (OverrideOptions == ThemeManagerOverrideOptions.SystemTrayAndApplicationBars)
                     {
