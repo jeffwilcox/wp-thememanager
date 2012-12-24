@@ -412,14 +412,13 @@ namespace Microsoft.Phone.Controls
                     new ThemeValue("TextBox", new DualColorValue(0xBFFFFFFF, 0x26000000)),
                     new ThemeValue("TextBoxForeground", new DualColorValue(0xFF000000, 0xDE000000)),
                     new ThemeValue("TextBoxEditBackground", new DualColorValue(0xFFFFFFFF, 0x00000000)),
-                    new ThemeValue("TextBoxEditBorder", new DualColorValue(0xFFFFFFFF, 0xDE000000)),
                     new ThemeValue("TextBoxReadOnly", new DualColorValue(0x77000000, 0x2E000000)),
 
                     new ThemeValue("RadioCheckBox", new DualColorValue(0xBFFFFFFF, 0x26000000)),
                     new ThemeValue("RadioCheckBoxDisabled", new DualColorValue(0x66FFFFFF, 0x00000000)),
                     new ThemeValue("RadioCheckBoxCheck", new DualColorValue(0xFF000000, 0xDE000000)),
                     new ThemeValue("RadioCheckBoxCheckDisabled", new DualColorValue(0x66000000, 0x4D000000)),
-                    new ThemeValue("RadioCheckBoxPressed", new DualColorValue(0xFFFFFFFF, 0x00000000)),
+                    
                     new ThemeValue("RadioCheckBoxPressedBorder", new DualColorValue(0xFFFFFFFF, 0xDE000000)),
 
                     new ThemeValue("Semitransparent", new DualColorValue(0xAA000000, 0xAAFFFFFF)),
@@ -436,6 +435,12 @@ namespace Microsoft.Phone.Controls
                     new ThemeValue("DarkThemeOpacity", new DualValue<double>(1.0, 0.0)),
                     new ThemeValue("LightThemeOpacity", new DualValue<double>(0.0, 1.0)),
                 };
+                // If we're on 7, add 7 only colours
+                if (System.Environment.OSVersion.Version.Major == 7)
+                {
+                    _values.Add(new ThemeValue("RadioCheckBoxPressed", new DualColorValue(0xFFFFFFFF, 0x00000000)));
+                    _values.Add(new ThemeValue("TextBoxEditBorder", new DualColorValue(0xFFFFFFFF, 0xDE000000)));
+                }
 
                 // Could customize this class to offer debug/testing-specific
                 // values or branding themes here.
