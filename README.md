@@ -80,3 +80,7 @@ limitations under the License.
 
 * Fixes an issue with the light theme and setting to dark w.r.t. the system tray progress indicator
 * Removes a throw when reapplying the theme.
+
+1.3.3:
+
+* Some colors/themes should only be present in Windows Phone 7.x as they were removed/changed in 8.0. Adds a logic check that was contributed.
