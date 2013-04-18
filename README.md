@@ -15,7 +15,7 @@ Although this isn't designed to handle custom themes, branding scenarios, etc., 
 
 The applied resources only affect mostly chrome colors, foreground, background, but not the accent color.
 
-For more information check out http://www.jeff.wilcox.name/phonethememanager
+For more information check out http://www.jeff.wilcox.name/2012/01/phonethememanager/
 
 # Custom Themes 
 
