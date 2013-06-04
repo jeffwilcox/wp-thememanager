@@ -5,7 +5,7 @@ A Windows Phone library that allows for overriding the theme to be Dark, Light, 
 It also supports overriding the Accent color and brush for use in custom-branded applications. For fun, I've included the standard Mango accent brushes and a few of the custom ones (my Lumia 800 came from Germany and has a gray/'grau' color available, plus Nokia Blue, etc.). I'll accept any pull requests that add additional OEM colors if people think that would have any value in their applications at all.
 
 
-For Windows Phone 7.5 (this library targets the Windows Phone 7.1 SDK)
+For Windows Phone 7.5 (this library targets the Windows Phone 7.1 SDK), and is compatible with Windows Phone 8 as well.
 
 # How to use
 
@@ -29,8 +29,7 @@ To then set the custom theme, just call `ThemeManager.SetCustomTheme(rd, Theme.L
 
 # Credits
 
-Implementation created by Jeff Wilcox,
-Custom Theme support added by Scott Lovegrove
+Implementation created by Jeff Wilcox; Custom Theme support added by Scott Lovegrove; Windows Phone 8 fixes by Shawn Oster.
 
 ## NuGet
 
