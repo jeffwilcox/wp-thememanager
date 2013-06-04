@@ -252,7 +252,17 @@ namespace Microsoft.Phone.Controls
         /// <param name="color">A Color to set the accent brush/color to.</param>
         public static void SetAccentColor(Color color)
         {
-            RuntimeThemeResources.DualColorValue.SetColorAndBrush("PhoneAccent", color);
+            RuntimeThemeResources.DualColorValue.SetOrCreateColorAndBrush("PhoneAccent", color);
+
+            // In Windows Phone 8 the accent color is used in controls
+            // for pressed and focused states.  Due to how resources are
+            // evaluated any resource based on accent color needs to be specifically
+            // set.
+            if (System.Environment.OSVersion.Version.Major >= 8)
+            {
+                RuntimeThemeResources.DualColorValue.SetOrCreateBrush("PhoneTextBoxEditBorder", color);
+                RuntimeThemeResources.DualColorValue.SetOrCreateBrush("PhoneRadioCheckBoxPressed", color);
+            }
         }
 
         /// <summary>
@@ -457,7 +467,7 @@ namespace Microsoft.Phone.Controls
                     _light = light;
                 }
 
-                internal static void SetColorAndBrush(string prefix, Color color)
+                internal static void SetOrCreateColorAndBrush(string prefix, Color color)
                 {
                     var currentColor = new Color();
                     // Check if the Colour is actually in the dictionary
@@ -477,18 +487,24 @@ namespace Microsoft.Phone.Controls
                     }
 
                     // Check if the Brush is actually in the dictionary
+                    SetOrCreateBrush(prefix, color);
+                }
+
+                internal static void SetOrCreateBrush(string prefix, Color color)
+                {
+                    // Check if the Brush is actually in the dictionary
                     if (Application.Current.Resources.Contains(prefix + "Brush"))
                     {
-                        var brush = (SolidColorBrush) Application.Current.Resources[prefix + "Brush"];
-                        brush.Color = currentColor;
+                        var brush = (SolidColorBrush)Application.Current.Resources[prefix + "Brush"];
+                        brush.Color = color;
                     }
                     else
                     {
                         // If it's not in the dictionary, add it.
                         var brush = new SolidColorBrush
-                                        {
-                                            Color = currentColor
-                                        };
+                        {
+                            Color = color
+                        };
                         Application.Current.Resources.Add(prefix + "Brush", brush);
                     }
                 }
@@ -507,7 +523,7 @@ namespace Microsoft.Phone.Controls
                 {
                     string name = "Phone" + prefix;
                     var value = (Color)(Value(theme));
-                    SetColorAndBrush(name, value);
+                    SetOrCreateColorAndBrush(name, value);
                 }
             }
 
