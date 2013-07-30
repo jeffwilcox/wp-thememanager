@@ -139,6 +139,9 @@ namespace Microsoft.Phone.Controls
         private static Color _chrome;
         private static Color _background;
         private static Color _foreground;
+        // 20130730 [Rowdy.nl] -->
+        private static ImageBrush _backgroundBrush;
+        // 20130730 [Rowdy.nl] <--
 
         private static bool _applied;
         private static Theme _themeAtStartup;
@@ -235,6 +238,22 @@ namespace Microsoft.Phone.Controls
         {
             OverrideTheme(Theme.Dark);
         }
+        
+        // 20130730 [Rowdy.nl] -->
+        /// <summary>
+        /// Sets an image as default background for all pages
+        /// </summary>
+        /// <param name="background">Uri to the background</param>
+        public static void SetBackground(Uri background)
+        {
+            ImageBrush brush = new ImageBrush
+            {
+                ImageSource = new System.Windows.Media.Imaging.BitmapImage(background),
+                Opacity = 0.8d
+            };
+            _backgroundBrush = brush;
+        }
+        // 20130730 [Rowdy.nl] <--
 
         /// <summary>
         /// Overrides the accent color and brush used at runtime to a new one.
@@ -643,7 +662,12 @@ namespace Microsoft.Phone.Controls
                         var asControl = frame as Control;
                         if (asControl != null)
                         {
-                            asControl.Background = new SolidColorBrush(background);
+                            // 20130730 [Rowdy.nl] -->
+                            if (_backgroundBrush != null)
+                                asControl.Background = _backgroundBrush;
+                            else
+                            // 20130730 [Rowdy.nl] <--
+                                asControl.Background = new SolidColorBrush(background);
                         }
 
                         // Hook up to the navigation events for the tray.
