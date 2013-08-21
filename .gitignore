@@ -15,3 +15,5 @@ obj/*
 *.docstates
 *.g.cs
 nuget/PhoneThemeManager.Source/content/*
+nuget/PhoneThemeManager/lib
+nuget/PhoneThemeManager/lib/*
