@@ -679,7 +679,7 @@ namespace Microsoft.Phone.Controls
                         var asControl = frame as Control;
                         if (asControl != null)
                         {
-                            asControl.Background = _background != null ? _backgroundBrush : new SolidColorBrush(background);
+                            asControl.Background = _backgroundBrush != null ? _backgroundBrush : new SolidColorBrush(background);
                         }
 
                         // Hook up to the navigation events for the tray.
