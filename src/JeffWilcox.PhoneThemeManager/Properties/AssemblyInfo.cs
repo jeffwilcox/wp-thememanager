@@ -1,5 +1,5 @@
 ﻿//
-// Copyright (c) 2012 Jeff Wilcox
+// Copyright © Jeff Wilcox
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@ using System.Runtime.InteropServices;
 using System.Resources;
 
 [assembly: AssemblyTitle("Phone Theme Manager for Windows Phone")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Supports overriding the default themes in Windows Phone applications.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jeff Wilcox")]
 [assembly: AssemblyProduct("JeffWilcox.PhoneThemeManager")]
-[assembly: AssemblyCopyright("Copyright ©  2012 Jeff Wilcox")]
+[assembly: AssemblyCopyright("Copyright © Jeff Wilcox")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
