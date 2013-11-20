@@ -103,6 +103,11 @@ namespace Microsoft.Phone.Controls
         SystemTrayColors,
 
         /// <summary>
+        /// Colors ApplicationBars appropriately
+        /// </summary>
+        ApplicationBarColors,
+
+        /// <summary>
         /// Colors system trays appropriately and also any set ApplicationBar
         /// instances. Will not theme ApplicationBar instances that are 
         /// created after the page's Navigated event or that are created and
@@ -510,7 +515,7 @@ namespace Microsoft.Phone.Controls
                     // Check if the Colour is actually in the dictionary
                     if (Application.Current.Resources.Contains(prefix + "Color"))
                     {
-                        currentColor = (Color) Application.Current.Resources[prefix + "Color"];
+                        currentColor = (Color)Application.Current.Resources[prefix + "Color"];
                         currentColor.A = color.A;
                         currentColor.B = color.B;
                         currentColor.G = color.G;
@@ -637,19 +642,24 @@ namespace Microsoft.Phone.Controls
             {
                 if (page != null)
                 {
-                    // Corrects the issue where white foreground text and the
-                    // light theme on the phone will then have invisible
-                    // progress indicator text.
-                    Color systemTrayForeground = foreground;
-                    if (Colors.White == foreground && _themeAtStartup == Theme.Light)
+                    if (OverrideOptions == ThemeManagerOverrideOptions.SystemTrayAndApplicationBars ||
+                        OverrideOptions == ThemeManagerOverrideOptions.SystemTrayColors)
                     {
-                        systemTrayForeground = AlmostWhite;
+                        // Corrects the issue where white foreground text and the
+                        // light theme on the phone will then have invisible
+                        // progress indicator text.
+                        Color systemTrayForeground = foreground;
+                        if (Colors.White == foreground && _themeAtStartup == Theme.Light)
+                        {
+                            systemTrayForeground = AlmostWhite;
+                        }
+
+                        SystemTray.SetBackgroundColor(page, background);
+                        SystemTray.SetForegroundColor(page, systemTrayForeground);
                     }
 
-                    SystemTray.SetBackgroundColor(page, background);
-                    SystemTray.SetForegroundColor(page, systemTrayForeground);
-
-                    if (OverrideOptions == ThemeManagerOverrideOptions.SystemTrayAndApplicationBars)
+                    if (OverrideOptions == ThemeManagerOverrideOptions.SystemTrayAndApplicationBars || 
+                        OverrideOptions == ThemeManagerOverrideOptions.ApplicationBarColors)
                     {
                         var appBar = page.ApplicationBar as IApplicationBar;
                         if (appBar != null)
@@ -685,7 +695,8 @@ namespace Microsoft.Phone.Controls
 
                         // Hook up to the navigation events for the tray.
                         if (OverrideOptions == ThemeManagerOverrideOptions.SystemTrayAndApplicationBars ||
-                            OverrideOptions == ThemeManagerOverrideOptions.SystemTrayColors)
+                            OverrideOptions == ThemeManagerOverrideOptions.SystemTrayColors ||
+                            OverrideOptions == ThemeManagerOverrideOptions.ApplicationBarColors)
                         {
                             PhoneApplicationFrame paf = frame as PhoneApplicationFrame;
                             if (paf != null)
