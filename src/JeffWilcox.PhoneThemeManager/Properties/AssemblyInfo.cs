@@ -32,7 +32,7 @@ using System.Resources;
 
 [assembly: Guid("8563d239-ee43-4e69-8682-fde8a015d1f1")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
