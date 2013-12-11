@@ -460,10 +460,11 @@ namespace Microsoft.Phone.Controls
                     new ThemeValue("TextBoxEditBackground", new DualColorValue(0xFFFFFFFF, 0x00000000)),
                     new ThemeValue("TextBoxReadOnly", new DualColorValue(0x77000000, 0x2E000000)),
 
-                    new ThemeValue("RadioCheckBox", new DualColorValue(0xBFFFFFFF, 0x26000000)),
+                    new ThemeValue("RadioCheckBox", new DualColorValue(0xFF000000, 0xBFFFFFFF)),
                     new ThemeValue("RadioCheckBoxDisabled", new DualColorValue(0x66FFFFFF, 0x00000000)),
-                    new ThemeValue("RadioCheckBoxCheck", new DualColorValue(0xFF000000, 0xDE000000)),
+                    new ThemeValue("RadioCheckBoxCheck", new DualColorValue(0xFFFFFFFF, 0xDE000000)),
                     new ThemeValue("RadioCheckBoxCheckDisabled", new DualColorValue(0x66000000, 0x4D000000)),
+                    new ThemeValue("RadioCheckBoxBorder", new DualColorValue(0xFFFFFFFF, 0xFF000000)),
                     
                     new ThemeValue("RadioCheckBoxPressedBorder", new DualColorValue(0xFFFFFFFF, 0xDE000000)),
 
