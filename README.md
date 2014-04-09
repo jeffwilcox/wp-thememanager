@@ -1,10 +1,20 @@
 #wp-thememanager 
 
-A Windows Phone library that allows for overriding the theme to be Dark, Light, Inverted, etc. as well as now enabling you to set a custom theme to override the default Phone brushes.
+Jeff Wilcox's wp-thememanager is a Windows Phone library that allows for overriding the theme to be Dark, Light, Inverted, etc. as well as now enabling you to set a custom theme to override the default Phone brushes.
 
-It also supports overriding the Accent color and brush for use in custom-branded applications. For fun, I've included the standard Mango accent brushes and a few of the custom ones (my Lumia 800 came from Germany and has a gray/'grau' color available, plus Nokia Blue, etc.). I'll accept any pull requests that add additional OEM colors if people think that would have any value in their applications at all.
+The NuGet packages have been downloaded tens of thousands of times and power great apps for the platform including Instagram.
 
-For modern Windows Phone operating systems (7.1-8.0 OS).
+The library also supports overriding the Accent color and brush for use in custom-branded applications.
+
+NuGet versions 1.5 and lower are designed for Windows Phone 7.5 apps, while all recent versions should only be used for Windows Phone 8 apps.
+
+## Windows Phone 8.1 Note
+
+This library should not be necessary for phone 8.1 apps. It is primarily intended to offer theme overriding to Windows Phone 8 apps at this time.
+
+> Announced at the //build conference in San Francisco, the latest Windows Phone 8.1 operating system supports theme overriding in the core platform.
+
+> There's no longer reason to use `wp-thememanager` when building Windows Store apps for the phone or Universal apps.
 
 # How to use
 
@@ -62,35 +72,39 @@ limitations under the License.
 
 # Changelog
 
-1.0:
+2.0:
 
-* Initial implementation
+* Windows Phone 8-only support.
 
-1.1:
+1.5:
 
-* Adds Accent Brush features and functionality. Use the `ThemeManager.SetAccentColor(...)` overrides.
+* Adds new feature, Background brush and image brush support via the SetBackground function.
 
-1.2:
+1.4:
 
-* Adds Custom Theme support. Use `ThemeManager.SetCustomTheme(...)`
+* Accent color corrections for 8.0.
 
-1.3:
+1.3.3:
 
-* Merged with fixes from others.
+* Some colors/themes should only be present in Windows Phone 7.x as they were removed/changed in 8.0. Adds a logic check that was contributed.
 
 1.3.2:
 
 * Fixes an issue with the light theme and setting to dark w.r.t. the system tray progress indicator
 * Removes a throw when reapplying the theme.
 
-1.3.3:
+1.3:
 
-* Some colors/themes should only be present in Windows Phone 7.x as they were removed/changed in 8.0. Adds a logic check that was contributed.
+* Merged with fixes from others.
 
-1.4:
+1.2:
 
-* Accent color corrections for 8.0.
+* Adds Custom Theme support. Use `ThemeManager.SetCustomTheme(...)`
 
-1.5:
+1.1:
 
-* Adds new feature, Background brush and image brush support via the SetBackground function.
+* Adds Accent Brush features and functionality. Use the `ThemeManager.SetAccentColor(...)` overrides.
+
+1.0:
+
+* Initial implementation
