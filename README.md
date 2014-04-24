@@ -2,7 +2,7 @@
 
 Jeff Wilcox's wp-thememanager is a Windows Phone library that allows for overriding the theme to be Dark, Light, Inverted, etc. as well as now enabling you to set a custom theme to override the default Phone brushes.
 
-The NuGet packages have been downloaded tens of thousands of times and power great apps for the platform including Instagram.
+The NuGet packages have been downloaded tens of thousands of times and power great apps for the platform including Instagram and eBay.
 
 The library also supports overriding the Accent color and brush for use in custom-branded applications.
 
