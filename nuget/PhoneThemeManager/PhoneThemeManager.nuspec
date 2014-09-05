@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PhoneThemeManager</id>
-    <version>2.0</version>
+    <version>2.1</version>
     <title>Windows Phone Theme Manager</title>
     <authors>Jeff Wilcox</authors>
     <owners>Jeff Wilcox</owners>
@@ -11,7 +11,7 @@
     <iconUrl>http://d2bk44826ux9xe.cloudfront.net/phone.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The ThemeManager class provides static methods to be used during app initialization to force the app's resources to appear as the Dark or Light theme.</description>
-    <releaseNotes>This release targets only Windows Phone 8. Please use 1.5 if you need Windows Phone 7.1 OS app support.</releaseNotes>
+    <releaseNotes>This release targets only Windows Phone 8. Please use 1.5 if you need Windows Phone 7.1 OS app support. Adds override option from a contribution.</releaseNotes>
     <copyright>Copyright Jeff Wilcox and contributors</copyright>
     <tags>Windows "Windows Phone" phone wp8 design light dark theme manager thememanager phonethememanager</tags>
   </metadata>

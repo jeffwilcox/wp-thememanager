@@ -1,7 +1,7 @@
 @echo off
 pushd %~dp0
 pushd ..\src\JeffWilcox.PhoneThemeManager\
-msbuild /p:Configuration=Release
+msbuild /p:Configuration=Release /p:Platform="Any CPU"
 popd
 mkdir .\PhoneThemeManager\lib
 mkdir .\PhoneThemeManager\lib\windowsphone8
