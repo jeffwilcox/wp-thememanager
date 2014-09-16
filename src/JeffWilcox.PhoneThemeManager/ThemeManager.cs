@@ -351,9 +351,11 @@ namespace Microsoft.Phone.Controls
 
                 if (Application.Current.Resources.MergedDictionaries.Count > 0)
                 {
-                    Application.Current.Resources.MergedDictionaries.Remove(
-                        Application.Current.Resources.MergedDictionaries.Single(
-                        x => x.Source == styleUri));
+                    ResourceDictionary dict = Application.Current.Resources.MergedDictionaries.FirstOrDefault(x => x.Source == styleUri);
+                    if(dict != null)
+                    {
+                        Application.Current.Resources.MergedDictionaries.Remove(dict);
+                    }                        
                 }
 
                 SetCustomTheme(rd, themeToOverride);
