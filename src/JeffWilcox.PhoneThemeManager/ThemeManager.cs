@@ -478,7 +478,7 @@ namespace Microsoft.Phone.Controls
                     // Fix for ToggleSwitch in Phone Toolkit
                     new ThemeValue("TextLowContrast", new DualColorValue(0x73FFFFFF, 0x40000000)),
                     new ThemeValue("TextMidContrast", new DualColorValue(0x99FFFFFF, 0x73000000)),
-                    new ThemeValue("TextHighContrast", new DualColorValue(0xFFFFFFFF, 0x00000000)),
+                    new ThemeValue("TextHighContrast", new DualColorValue(0xFFFFFFFF, 0xDE000000)),
 
                     new ThemeValue("Semitransparent", new DualColorValue(0xAA000000, 0xAAFFFFFF)),
 
